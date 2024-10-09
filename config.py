@@ -9,3 +9,7 @@ long_min = -75.981930
 long_max =  -75.959080
 
 sheet_name = "ExploBot"
+
+CRED_FILE = "explo-bot-revival-27f346f14a92.json"
+
+SPREADSHEET_NAME = "ExploBot"

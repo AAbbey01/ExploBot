@@ -10,7 +10,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 app = Flask(__name__)
 
 # Your GroupMe bot token
-BOT_ID = config.BOT_ID  # Replace with your actual bot ID
+BOT_ID = config.BOT_ID  
 GROUP_ID = config.GROUP_ID
 BOT_TOKEN = config.BOT_TOKEN
 # Dictionary to track points for each user who spots someone
@@ -18,9 +18,9 @@ user_points = {}
 
 # Set up Google Sheets integration
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("explo-bot-revival-27f346f14a92.json", scope)  # Replace with your credentials JSON file
+creds = ServiceAccountCredentials.from_json_keyfile_name(config.CRED_FILE, scope)  
 client = gspread.authorize(creds)
-sheet = client.open("ExploBot").sheet1  # Open the sheet (replace with the name of your Google Sheet)
+sheet = client.open(config.SPREADSHEET_NAME).sheet1  
 
 # Function to send messages to GroupMe
 def send_message(text):
@@ -46,7 +46,7 @@ def check_for_spotted_and_coords(text, attachments):
             user_ids = attachment['user_ids']
             mentioned_user = user_ids[0] if user_ids else None
     if mentioned_user:
-        pattern = r"spotted\s*\(\s*(-?\d+\.?\d+)\s*,\s*(-?\d+\.?\d+)\s*\)"
+        pattern = r"(spotted)*\s*\(\s*(-?\d+\.?\d+)\s*,\s*(-?\d+\.?\d+)\s*\)"
         match = re.search(pattern, text, re.IGNORECASE)
         if match:
             latitude = float(match.group(1))
@@ -76,8 +76,8 @@ def send_spot_success_message(spotter_name, spotted_name):
     spotted_name_from_id = get_nickname_from_id(spotted_name)
     success_message = (
         f"{spotter_name_from_id} successfully spotted {get_nickname_from_id(spotted_name)}! "
-        f"{spotter_name_from_id} has now spotted {spotter_spots} people this week, and "
-        f"{spotted_name_from_id} has been spotted {spotted_been_spotted} times this week."
+        f"{spotter_name_from_id} has now spotted {spotter_spots} {"people" if spotter_spots >1 else "person"} this week, and "
+        f"{spotted_name_from_id} has been spotted {spotted_been_spotted} {"time" if spotted_been_spotted == 1 else "times"} this week."
     )
     send_message(success_message)
 
@@ -201,10 +201,9 @@ def send_startup_message():
         print(f"Failed to send startup message: {response.status_code}")
 
 
-
-
 if __name__ == "__main__":
-    send_startup_message()
+    #send_startup_message()
+    print("Started!!")
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
 
