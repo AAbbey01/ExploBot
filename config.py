@@ -1,15 +1,14 @@
-BOT_ID = '48e5dc1f1cc00df8486a2b33a8'
-GROUP_ID = '103602925'
-BOT_TOKEN = 'eS4Pm6dT3nrQYzc0Ew8VNvk3nh2kBSypVfKLcDdE'
+#Input your GroupMe Bot info and Group info here
+BOT_ID = 
+GROUP_ID = 
+BOT_TOKEN = 
+#Specify Your Latitude Minimum and Maximum
+lat_min = 
+lat_max = 
+#Specify Your Longitude Minimum and Maximum
+long_min = 
+long_max =  
 
-lat_min = 41.70
-lat_max = 42.082529
+CRED_FILE = #Insert the path to your json file with credentials here
 
-long_min = -75.981930
-long_max =  -75.959080
-
-sheet_name = "ExploBot"
-
-CRED_FILE = "explo-bot-revival-27f346f14a92.json"
-
-SPREADSHEET_NAME = "ExploBot"
+SPREADSHEET_NAME = #Insert Your Spreadsheet Name Here
