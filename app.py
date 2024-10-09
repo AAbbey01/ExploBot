@@ -4,7 +4,6 @@ import requests
 import re
 import gspread
 import config
-import config_example
 from oauth2client.service_account import ServiceAccountCredentials
 
 app = Flask(__name__)
