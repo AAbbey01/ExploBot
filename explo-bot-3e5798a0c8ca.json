@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "explo-bot",
+  "private_key_id": "3e5798a0c8ca8ac10f95b9bf31a2b0a281f3e483",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCxOLZB5UeY+VWA\nKfLy6RVgNN4kK7vAGAfWXHvYBBAt9m2wxROoHjAX/a3Sm8r+9/XOylI4Mfeet0fp\nFavwk9PaqHbDPS4bnWUoBhB4UnviL257YKaaJ1nr5bxrk0w6C28MuGc6VBtRj9Ho\nSZZx4V61d/NzdwAQq0ocMWbW8SsKmX6rrDGa53X+dLL7XAttT9IgaKzQHwLCp4lN\n5VEoCfchgPR1TyaukStZ1l9u4GMavLuZ9bK78tMtbfX06xkzGG8v7+nUPcq6jlLs\nlIoPgpOMtVr7PvOF5AH8UQT+5+hm78B0dJD5rs/9p9I1kGWjRJjF9zrpAL+JbGaP\nQ4wvUAehAgMBAAECggEAAwsjyibrX1us1bois3xAQzo1NG7R1x8yh0JoWBHdy0RH\npvkDeOgn0Empggvt5QoSHR6JYfCtvXqNUBnwrX2EbmVlQL4cvBmsYo8UGlTkTsKc\nxZ6nzc7uMuhrn3dUoEyQ+Cl0kGJgY7qyEqis3kDOFRS9yBZbmG2wpKJOj1Nt900b\nJHrzcgFZJzNUi4JBhkmEx3OF+ICdMZpmhfpnRGaVACfdpPJNRf2KOHe2+qo71sX9\nrQr8cwD9275Sd1Xgrar3CLxUUhPyx9Iu8h2kCb0Ngw+Qf+iQPTgItEsqI+LQoKo6\n2lGRWicaTFiZJZDgA7cton3av2AkSql9rxmWr5ajIQKBgQD2alB5QpjJS/+S9qRC\nZW6FhvfGXpccLvgvAOy9dPxb9b3S6uhznZD3eulI1nSfB/2uve7hE0Z3DHwMAksB\n1z8fKHS0mi4fCGddqxzkDwQE2i73YxjG5vU3YBEE8uaDqurYdNSNSCFMnhcwJGkA\n71mWAsRv6wlMv+JKrs0ij/LESQKBgQC4HWYzLilWBp6UZeLhW80Kar562gbjry9+\nm3WfAMNdXOw7Zj+G/My/+yUq+tw9wn5Z2Fm6WNmnlxEHBq1Hy9Zsalde/FwgqPLP\nbiR6lelKUktZ0eiAJWjztID0GBIbueQI9+jf7tytsQRotg2sN3Th20+gEIeAtOP9\nCTqG7IL4mQKBgQC4mCYW4NviGEuqBZhBoQitgNFGyn96/nivhYrT1rpiDXKZeZ6P\nVd9OdcYi6XzN0cepyuETvUPRVQnsWR9ljqDbr4vV65ZXaw08Lz5iXhlNpUD/1D2w\naz4RsKavRWOICVcKtmKwP/OqGNgYGX6L08IRzZromHMMCsbz2YUUui9L+QKBgQCp\nBqR6vBhK18ziJB+EEQlOVO0GT/8fLAeITiRPkx3IKrTdW2NbA97dKS3YJXHoaRQi\nW5MUltlLGE8TijeuwB3cbkxD8Z6KhVBUyqNGvzXre12d2i1+59lQUxhH/4kwVxpY\neXAblWiXNPn9P5WR01/EsdiJ9GLR8D+WX9CRabRbkQKBgQDjJPidY8SSEegtPdwH\nBFE0LdnMiEDa8tYpxbHeGWsZRbgnEysHEud+QYMfYzyF2TuhIUoJvtTBtcKVovf7\nD2t+/gEsTHDKN4Eg3lhvambEpJmyob8RY8PJMNId6Q/pNnsQzhlijTK6W7yV9aJ7\nubzhKpRI7gYl8diPZQrD9Ipllw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "explo-bot-revival@explo-bot-revival.iam.gserviceaccount.com",
+  "client_id": "118413751473457901953",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/explo-bot-service-acount%40explo-bot.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

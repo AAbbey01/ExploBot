@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/explo-bot-revival/app', '.']
+images:
+- 'gcr.io/explo-bot-revival/app'

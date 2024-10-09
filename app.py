@@ -1,8 +1,10 @@
 from flask import Flask, request
+import os
 import requests
 import re
 import gspread
 import config
+import config_example
 from oauth2client.service_account import ServiceAccountCredentials
 
 app = Flask(__name__)
@@ -16,7 +18,7 @@ user_points = {}
 
 # Set up Google Sheets integration
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("C:\python_api_programs\explo-bot-3e5798a0c8ca.json", scope)  # Replace with your credentials JSON file
+creds = ServiceAccountCredentials.from_json_keyfile_name("explo-bot-revival-27f346f14a92.json", scope)  # Replace with your credentials JSON file
 client = gspread.authorize(creds)
 sheet = client.open("ExploBot").sheet1  # Open the sheet (replace with the name of your Google Sheet)
 
@@ -44,7 +46,7 @@ def check_for_spotted_and_coords(text, attachments):
             user_ids = attachment['user_ids']
             mentioned_user = user_ids[0] if user_ids else None
     if mentioned_user:
-        pattern = r"spotted\s*\(\s*(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)\s*\)"
+        pattern = r"spotted\s*\(\s*(-?\d+\.?\d+)\s*,\s*(-?\d+\.?\d+)\s*\)"
         match = re.search(pattern, text, re.IGNORECASE)
         if match:
             latitude = float(match.group(1))
@@ -61,44 +63,41 @@ def send_spot_success_message(spotter_name, spotted_name):
     if spotter_row:
         spotter_spots = int(sheet.cell(spotter_row, 2).value)  # Times_Spotted (Column 2)
     else:
-        send_message("failed to find spotter")
+   #     send_message("failed to find spotter")
         return
     if spotted_row:
         spotted_been_spotted = int(sheet.cell(spotted_row, 3).value)  # Times_Been_Spotted (Column 3)
     else:
-        send_message("failed to get who has been spotted")
+    #    send_message("failed to get who has been spotted")
         return
 
     # Generate and send the success message
     spotter_name_from_id = get_nickname_from_id(spotter_name)
     success_message = (
         f"{spotter_name_from_id} successfully spotted {get_nickname_from_id(spotted_name)}! "
-        f"{spotter_name_from_id} has now spotted {spotter_spots} people, and "
-        f"{spotter_name_from_id} has been spotted {spotted_been_spotted} times."
+        f"{spotter_name_from_id} has now spotted {spotter_spots} people this week, and "
+        f"{spotter_name_from_id} has been spotted {spotted_been_spotted} times this week."
     )
     send_message(success_message)
 
 
 # Function to log the spot data in the Google Sheet
 def log_spot_in_sheet(spotter_id, spotted_id):
-    # Try to find both users in the sheet
     spotter_row = find_user_row(spotter_id)
     spotted_row = find_user_row(spotted_id)
     
-    # If the spotter is not found, add a new row for them
+    # Weekly Tracker (Columns D and E)
     if spotter_row is None:
-        sheet.append_row([spotter_id, 1, 0])  # Spotter is spotting someone for the first time
+        sheet.append_row([spotter_id, 0, 0, 1, 0])
     else:
-        current_spots = int(sheet.cell(spotter_row, 2).value)  # Times_Spotted is in column 2
-        sheet.update_cell(spotter_row, 2, current_spots + 1)  # Increment spot count
+        current_weekly_spots = int(sheet.cell(spotter_row, 4).value)
+        sheet.update_cell(spotter_row, 4, current_weekly_spots + 1)
 
-    # If the spotted user is not found, add a new row for them
     if spotted_row is None:
-        sheet.append_row([spotted_id, 0, 1])  # This is the first time they have been spotted
+        sheet.append_row([spotted_id, 0, 0, 0, 1])
     else:
-        current_been_spotted = int(sheet.cell(spotted_row, 3).value)  # Times_Been_Spotted is in column 3
-        sheet.update_cell(spotted_row, 3, current_been_spotted + 1)  # Increment been spotted count
-
+        current_weekly_been_spotted = int(sheet.cell(spotted_row, 5).value)
+        sheet.update_cell(spotted_row, 5, current_weekly_been_spotted + 1)
 
 # Helper function to find a user's row in the Google Sheet
 def find_user_row(user_name):
@@ -144,6 +143,9 @@ def get_nickname_from_id(user_id):
 
 
 
+@app.route('/')
+def hello():
+    return "Hi"
 
 # Webhook endpoint that GroupMe will hit
 @app.route('/groupme', methods=['POST'])
@@ -163,7 +165,7 @@ def webhook():
     
     if mentioned_user and latitude and longitude:
         # Check if coordinates are within a specific area (e.g., a campus)
-        area_bounds = (41.70, 42.75, -77.01, -74.99)  # Example bounds (min lat, max lat, min long, max long)
+        area_bounds = (config.lat_min, config.lat_max, config.long_min, config.long_max)  # Example bounds (min lat, max lat, min long, max long)
         if is_within_area(latitude, longitude, area_bounds):
             sender_id = data['sender_id']
             sender_name = data['name']  # Name of the user who sent the message
@@ -181,15 +183,27 @@ def webhook():
 
             # Send success message with updated stats
             send_spot_success_message(sender_id, mentioned_user_name)
-        else:
-            send_message(f"Coordinates are outside the designated area.")
-    
-    return "OK", 200
+        #else:
+             #send_message(f"Coordinates are outside the designated area.")
+    else:
+        return "OK", 200
+
+
+def send_startup_message():
+    url = 'https://api.groupme.com/v3/bots/post'
+    data = {
+        'bot_id': BOT_ID,
+        'text': 'Bot has started and is now connected!'
+    }
+    response = requests.post(url, json=data)
+    if response.status_code != 202:
+        print(f"Failed to send startup message: {response.status_code}")
 
 
 
 
-if __name__ == '__main__':
-    #check_for_spotted_and_coords(f"@Bianka Spotted (42,-75)",[])
-    app.run(port=5000, debug=True)
+if __name__ == "__main__":
+    send_startup_message()
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
 
