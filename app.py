@@ -61,22 +61,23 @@ def send_spot_success_message(spotter_name, spotted_name):
     spotted_row = find_user_row(spotted_name)
 
     if spotter_row:
-        spotter_spots = int(sheet.cell(spotter_row, 2).value)  # Times_Spotted (Column 2)
+        spotter_spots = int(sheet.cell(spotter_row, 4).value)  # Times_Spotted (Column 2)
     else:
    #     send_message("failed to find spotter")
         return
     if spotted_row:
-        spotted_been_spotted = int(sheet.cell(spotted_row, 3).value)  # Times_Been_Spotted (Column 3)
+        spotted_been_spotted = int(sheet.cell(spotted_row, 5).value)  # Times_Been_Spotted (Column 3)
     else:
     #    send_message("failed to get who has been spotted")
         return
 
     # Generate and send the success message
     spotter_name_from_id = get_nickname_from_id(spotter_name)
+    spotted_name_from_id = get_nickname_from_id(spotted_name)
     success_message = (
         f"{spotter_name_from_id} successfully spotted {get_nickname_from_id(spotted_name)}! "
         f"{spotter_name_from_id} has now spotted {spotter_spots} people this week, and "
-        f"{spotter_name_from_id} has been spotted {spotted_been_spotted} times this week."
+        f"{spotted_name_from_id} has been spotted {spotted_been_spotted} times this week."
     )
     send_message(success_message)
 
@@ -110,7 +111,7 @@ def find_user_row(user_name):
     except:
         print(f"User {user_name} not found, adding new row.")
         # Append a new row for the user if they are not found
-        sheet.append_row([user_name, 0, 0])  # User has spotted 0 people and been spotted 0 times
+        sheet.append_row([user_name, 0, 0,0,0])  # User has spotted 0 people and been spotted 0 times
         new_row = len(sheet.get_all_values())  # Get the last row number
         print(f"New user {user_name} added at row {new_row}")
         return new_row
