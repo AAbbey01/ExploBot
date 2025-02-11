@@ -32,7 +32,7 @@ def comp_to_lat_long(match):
 def app_to_lat_long(match):
     spl = match.group(0).split("° N,")
     lat_st = spl.pop(0)
-    lat = lat_st
+    lat = lat_st[1:]
     lAT= float(lat)
     long_st = spl.pop(0)
     long_st = long_st[1:]
